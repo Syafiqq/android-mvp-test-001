@@ -9,4 +9,5 @@ interface SchedulerProvider {
     fun trampoline(): Scheduler
     fun newThread(): Scheduler
     fun mainThread(): Scheduler
+    fun ui(): Scheduler = mainThread()
 }
