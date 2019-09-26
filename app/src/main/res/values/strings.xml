@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">AndroidMVPTest</string>
+    <string name="app_name">Android Mvp</string>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="prepare_app">Prepare App</string>
 </resources>
