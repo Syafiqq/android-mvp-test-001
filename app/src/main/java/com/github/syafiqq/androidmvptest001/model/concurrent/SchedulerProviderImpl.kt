@@ -7,15 +7,10 @@ import javax.inject.Inject
 
 class SchedulerProviderImpl @Inject constructor() :
     SchedulerProvider {
-    override fun computation(): Scheduler {
-        return Schedulers.computation()
-    }
-
-    override fun io(): Scheduler {
-        return Schedulers.io()
-    }
-
-    override fun ui(): Scheduler {
-        return AndroidSchedulers.mainThread()
-    }
+    override fun single(): Scheduler = Schedulers.single()
+    override fun computation(): Scheduler = Schedulers.computation()
+    override fun io(): Scheduler = Schedulers.io()
+    override fun trampoline(): Scheduler = Schedulers.trampoline()
+    override fun newThread(): Scheduler = Schedulers.newThread()
+    override fun mainThread(): Scheduler = AndroidSchedulers.mainThread()
 }
