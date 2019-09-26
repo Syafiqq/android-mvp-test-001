@@ -13,7 +13,7 @@ class SplashScreenPresenter : SplashScreenContract.Presenter {
     }
 
     override fun onResume() {
-        Timber.d("onStart")
+        Timber.d("onResume")
     }
 
     override fun onRestart() {

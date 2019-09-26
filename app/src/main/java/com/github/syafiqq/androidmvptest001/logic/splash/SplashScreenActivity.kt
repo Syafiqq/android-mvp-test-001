@@ -12,7 +12,9 @@ import timber.log.Timber
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class SplashScreenActivity : AppCompatActivity(), SplashScreenView {
+class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
+    lateinit var presenter: SplashScreenContract.Presenter
+
     private val mHideHandler = Handler()
     private val mHidePart2Runnable = Runnable {
         // Delayed removal of status and navigation bar
@@ -38,10 +40,12 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenView {
         setContentView(R.layout.activity_splash_screen)
 
         mVisible = true
+        presenter = SplashScreenPresenter()
+        presenter.onCreate()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
-        Timber.d("onCreate [saveInstanceState]")
+        Timber.d("onPostCreate [saveInstanceState]")
         super.onPostCreate(savedInstanceState)
 
         // Trigger the initial hide() shortly after the activity has been
@@ -50,8 +54,50 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenView {
         delayedHide(100)
     }
 
+    override fun onStart() {
+        Timber.d("onStart")
+        super.onStart()
+
+        presenter.onStart()
+    }
+
+    override fun onResume() {
+        Timber.d("onResume")
+        super.onResume()
+
+        presenter.onResume()
+    }
+
+    override fun onRestart() {
+        Timber.d("onRestart")
+        super.onRestart()
+
+        presenter.onRestart()
+    }
+
+    override fun onPause() {
+        Timber.d("onPause")
+        super.onPause()
+
+        presenter.onPause()
+    }
+
+    override fun onStop() {
+        Timber.d("onStop")
+        presenter.onStop()
+
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Timber.d("onDestroy")
+        presenter.onDestroy()
+
+        super.onDestroy()
+    }
+
     override fun gotoLoginActivity() {
-        Timber.d("gotoLoginActivity []")
+        Timber.d("gotoLoginActivity")
     }
 
     private fun hide() {
