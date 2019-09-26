@@ -1,4 +1,4 @@
-package com.github.syafiqq.ext.google.dagger;
+package com.github.syafiqq.ext.dagger.android;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.github.syafiqq.ext.google.dagger.test", appContext.getPackageName());
+        assertEquals("com.github.syafiqq.ext.dagger.android.test", appContext.getPackageName());
     }
 }

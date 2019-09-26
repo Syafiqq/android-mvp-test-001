@@ -1,4 +1,4 @@
-package com.github.syafiqq.ext.google.dagger;
+package com.github.syafiqq.ext.dagger.android;
 
 import org.junit.Test;
 
