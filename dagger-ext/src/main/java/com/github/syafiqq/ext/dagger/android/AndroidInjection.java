@@ -166,5 +166,40 @@ public final class AndroidInjection {
     androidInjector.inject(target);
   }
 
+  /**
+   * @see #inject(Activity, Class)
+   */
+  public static void inject(Activity activity) {
+    inject(activity, null);
+  }
+
+  /**
+   * @see #inject(Fragment, Class)
+   */
+  public static void inject(Fragment fragment) {
+    inject(fragment, null);
+  }
+
+  /**
+   * @see #inject(Service, Class)
+   */
+  public static void inject(Service service) {
+    inject(service, null);
+  }
+
+  /**
+   * @see #inject(BroadcastReceiver, Context, Class)
+   */
+  public static void inject(BroadcastReceiver broadcastReceiver, Context context) {
+    inject(broadcastReceiver, context, null);
+  }
+
+  /**
+   * @see #inject(ContentProvider, Class)
+   */
+  public static void inject(ContentProvider contentProvider) {
+    inject(contentProvider, null);
+  }
+
   private AndroidInjection() {}
 }
