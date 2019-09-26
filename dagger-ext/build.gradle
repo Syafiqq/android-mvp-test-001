@@ -30,6 +30,9 @@ dependencies {
     //official
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
+    //dagger
+    implementation 'com.google.dagger:dagger-android:2.24'
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
