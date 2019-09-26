@@ -6,7 +6,9 @@ import com.github.syafiqq.androidmvptest001.model.di.module.AppModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import javax.inject.Singleton
 
+@Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
