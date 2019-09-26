@@ -1,5 +1,8 @@
 package com.github.syafiqq.ext.dagger.android;
 
+import static android.util.Log.DEBUG;
+import static dagger.internal.Preconditions.checkNotNull;
+
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
@@ -8,12 +11,8 @@ import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.util.Log;
-
-import dagger.android.AndroidInjector;
 import dagger.internal.Beta;
-
-import static android.util.Log.DEBUG;
-import static dagger.internal.Preconditions.checkNotNull;
+import dagger.android.AndroidInjector;
 
 /** Injects core Android types. */
 @Beta
@@ -53,7 +52,7 @@ public final class AndroidInjection {
    *       HasAndroidInjector}, and if none do
    *   <li>Uses the {@code fragment}'s {@link Fragment#getActivity() activity} if it implements
    *       {@link HasAndroidInjector}, and if not
-   *   <li>Uses the {@link Application} if it implements {@link HasAndroidInjector}.
+   *   <li>Uses the {@link android.app.Application} if it implements {@link HasAndroidInjector}.
    * </ol>
    *
    * If none of them implement {@link HasAndroidInjector}, a {@link IllegalArgumentException} is
