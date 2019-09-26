@@ -12,7 +12,7 @@ import timber.log.Timber
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity(), SplashScreenView {
     private val mHideHandler = Handler()
     private val mHidePart2Runnable = Runnable {
         // Delayed removal of status and navigation bar
@@ -48,6 +48,10 @@ class SplashScreenActivity : AppCompatActivity() {
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100)
+    }
+
+    override fun gotoLoginActivity() {
+        Timber.d("gotoLoginActivity []")
     }
 
     private fun hide() {
