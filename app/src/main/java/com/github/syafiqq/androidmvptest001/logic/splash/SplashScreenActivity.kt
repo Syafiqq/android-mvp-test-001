@@ -5,14 +5,17 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.github.syafiqq.androidmvptest001.R
+import com.github.syafiqq.ext.dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
+    @Inject
     lateinit var presenter: SplashScreenContract.Presenter
 
     private val mHideHandler = Handler()
@@ -35,12 +38,13 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("onCreate [saveInstanceState]")
+
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_splash_screen)
 
         mVisible = true
-        presenter = SplashScreenPresenter()
         presenter.onCreate()
     }
 

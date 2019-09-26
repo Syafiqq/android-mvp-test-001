@@ -3,7 +3,9 @@ package com.github.syafiqq.androidmvptest001.logic.splash
 import timber.log.Timber
 import javax.inject.Inject
 
-class SplashScreenPresenter : SplashScreenContract.Presenter {
+class SplashScreenPresenter @Inject constructor(
+    val view: SplashScreenContract.View
+) : SplashScreenContract.Presenter {
     override fun onCreate() {
         Timber.d("onCreate")
     }
@@ -31,6 +33,4 @@ class SplashScreenPresenter : SplashScreenContract.Presenter {
     override fun onDestroy() {
         Timber.d("onDestroy")
     }
-
-    lateinit var view: SplashScreenContract.View
 }
