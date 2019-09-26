@@ -56,6 +56,10 @@ public abstract class DaggerApplication extends Application implements HasAndroi
           @SuppressWarnings("unchecked")
           AndroidInjector<DaggerApplication> applicationInjector =
               (AndroidInjector<DaggerApplication>) holders.get(cls);
+          if (applicationInjector == null) {
+            throw new IllegalStateException(
+                "The AndroidInjector returned from applicationInjector() returns null ");
+          }
           applicationInjector.inject(this);
           if (androidInjector == null) {
             throw new IllegalStateException(
