@@ -1,10 +1,12 @@
 package com.github.syafiqq.androidmvptest001.logic.splash
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.github.syafiqq.androidmvptest001.R
+import com.github.syafiqq.androidmvptest001.logic.login.LoginActivity
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 import timber.log.Timber
@@ -102,6 +104,10 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
 
     override fun gotoLoginActivity() {
         Timber.d("gotoLoginActivity")
+
+        startActivity(Intent(this, LoginActivity::class.java)).also {
+            finish()
+        }
     }
 
     private fun hide() {
