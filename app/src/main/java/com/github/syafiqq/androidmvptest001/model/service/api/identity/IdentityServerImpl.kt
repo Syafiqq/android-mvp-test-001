@@ -1,34 +1,39 @@
 package com.github.syafiqq.androidmvptest001.model.service.api.identity
 
-import android.os.SystemClock
-import android.text.TextUtils
-import com.github.syafiqq.androidmvptest001.model.dump.Storage
+import com.github.syafiqq.androidmvptest001.model.dump.UserWebService
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
+import com.github.syafiqq.ext.io.reactivex.MaybeExt
+import io.reactivex.Maybe
 import javax.inject.Inject
 
-class IdentityServerImpl @Inject constructor(): IdentityServer {
-    val users = Storage.users
-    var session: UserEntity? = null
+class IdentityServerImpl @Inject constructor() : IdentityServer {
 
-    override fun login(email: String, password: String): UserEntity? {
-        SystemClock.sleep(1000)
-        return users.values.firstOrNull {
-            TextUtils.equals(email, it.email) and TextUtils.equals(password, it.password)
+    override fun login(email: String, password: String): Maybe<UserEntity> {
+        return Maybe.defer {
+            UserWebService.login(email, password).let {
+                if (it != null) {
+                    MaybeExt.ofNullable(it)
+                } else
+                    Maybe.error<UserEntity>(RuntimeException("Not Registered"))
+            }
         }
     }
 
     override fun logout() {
-        SystemClock.sleep(1000)
-        session = null
+        UserWebService.logout()
     }
 
-    override fun getUser(id: String): UserEntity? {
-        SystemClock.sleep(1000)
-        return if (session == null)
-            throw RuntimeException("Unauthorized")
-        else
-            users.entries.firstOrNull {
-                TextUtils.equals(id, it.key)
-            }?.value
+    override fun isLoggedIn(): Boolean {
+        return UserWebService.isLoggedIn()
+    }
+
+    override fun getUser(id: String): Maybe<UserEntity> {
+        return Maybe.defer {
+            try {
+                MaybeExt.ofNullable(UserWebService.getUser(id))
+            } catch (e: Throwable) {
+                Maybe.error<UserEntity>(e)
+            }
+        }
     }
 }

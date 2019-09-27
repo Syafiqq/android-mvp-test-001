@@ -1,53 +1,22 @@
 package com.github.syafiqq.androidmvptest001.model.service.identity
 
-import com.github.syafiqq.androidmvptest001.model.service.api.identity.IdentityServer
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
-import io.reactivex.Flowable
+import com.github.syafiqq.ext.io.reactivex.MaybeExt
+import io.reactivex.Maybe
 import javax.inject.Inject
 
-class UserManagerImpl @Inject constructor(private val server: IdentityServer) : UserManager {
+class UserManagerImpl @Inject constructor() : UserManager {
     private var session: UserEntity? = null
 
-    override fun login(email: String, password: String): Flowable<UserEntity> {
-        return Flowable.defer {
-            server.login(email, password).let {
-                if (it != null) {
-                    session = it
-                    Flowable.just(it)
-                } else
-                    Flowable.error<UserEntity>(RuntimeException("Not Registered"))
-            }
-        }
+    override fun setSession(user: UserEntity) {
+        session = user
     }
 
-    override fun logout(): Flowable<UserEntity> {
-        return Flowable.defer {
-            val ses = session
-            if (ses == null)
-                Flowable.error<UserEntity>(RuntimeException("Unauthorized"))
-            else {
-                server.logout()
-                session = null
-                Flowable.just(ses)
-            }
-        }
+    override fun destroySession() {
+        session = null
     }
 
-    override fun isLoggedIn(): Boolean {
-        return session != null
-    }
+    override fun isLoggedIn(): Boolean = session == null
 
-    override fun getUser(id: String): Flowable<UserEntity> {
-        return Flowable.defer {
-            if (session == null)
-                Flowable.error<UserEntity>(RuntimeException("Unauthorized"))
-            else
-                server.getUser(id).let {
-                    if (it != null) {
-                        Flowable.just(it)
-                    } else
-                        Flowable.empty<UserEntity>()
-                }
-        }
-    }
+    override fun getUser(): Maybe<UserEntity> = MaybeExt.ofNullable(session)
 }

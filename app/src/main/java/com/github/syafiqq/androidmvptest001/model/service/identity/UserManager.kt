@@ -1,11 +1,11 @@
 package com.github.syafiqq.androidmvptest001.model.service.identity
 
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
-import io.reactivex.Flowable
+import io.reactivex.Maybe
 
 interface UserManager {
-    fun login(email: String, password: String): Flowable<UserEntity>
-    fun logout(): Flowable<UserEntity>
+    fun setSession(user: UserEntity)
+    fun destroySession()
     fun isLoggedIn(): Boolean
-    fun getUser(id: String): Flowable<UserEntity>
+    fun getUser(): Maybe<UserEntity>
 }
