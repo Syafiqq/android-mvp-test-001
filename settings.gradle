@@ -1,7 +1,8 @@
-include ':app', ':dagger-ext'
+include ':app', ':dagger-ext', ':reactivex-ext'
 rootProject.name='AndroidMVPTest'
 
 def properties = new Properties()
 properties.load(new File('local.properties').newDataInputStream())
 
 project(':dagger-ext').projectDir = new File(properties.getProperty('dagger-ext.dir').toString())
+project(':reactivex-ext').projectDir = new File(properties.getProperty('reactivex-ext.dir').toString())

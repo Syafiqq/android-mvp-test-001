@@ -54,6 +54,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
     implementation 'com.github.akarnokd:rxjava2-extensions:0.20.10'
     implementation 'com.github.akarnokd:kotlin-flow-extensions:0.0.2'
+    implementation project(':reactivex-ext')
 
     //non-categorized
     implementation 'com.jakewharton.timber:timber:4.7.1'
