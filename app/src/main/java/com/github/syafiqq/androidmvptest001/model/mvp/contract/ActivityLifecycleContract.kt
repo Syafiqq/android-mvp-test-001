@@ -2,6 +2,7 @@ package com.github.syafiqq.androidmvptest001.model.mvp.contract
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import androidx.lifecycle.LifecycleObserver
 
 interface ActivityLifecycleContract {
     interface BaseContract {
@@ -24,6 +25,7 @@ interface ActivityLifecycleContract {
     }
 
     interface Presenter : BaseContract {
+        val lifecycleObserver: LifecycleObserver
         fun onCreate()
         fun onCreateWithPersistence()
         fun onPostCreate()
