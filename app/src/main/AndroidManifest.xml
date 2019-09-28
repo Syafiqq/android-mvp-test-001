@@ -12,9 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.github.syafiqq.androidmvptest001.logic.user.home.HomeActivity"
+            android:name=".logic.user.detail.DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:parentActivityName=".logic.user.home.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.syafiqq.androidmvptest001.logic.user.home.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".logic.user.home.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".logic.login.LoginActivity" />
         <activity
             android:name=".logic.splash.SplashScreenActivity"
