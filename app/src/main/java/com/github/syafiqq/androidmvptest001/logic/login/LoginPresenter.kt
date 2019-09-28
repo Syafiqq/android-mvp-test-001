@@ -89,19 +89,19 @@ class LoginPresenter @Inject constructor(
         view = null
     }
 
-    override fun doLogin(email: String?, password: String?) {
+    override fun doLogin(request: LoginRequest) {
         view?.onLoginClick()
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(request.email)) {
             view?.onInvalidEmail("Email cannot be empty")
             return
         }
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(request.password)) {
             view?.onInvalidEmail("Email cannot be empty")
             return
         }
 
-        val loginApi = api.login(email!!, password!!)
+        val loginApi = api.login(request.email, request.password)
             .subscribeOn(scheduler.single())
             .observeOn(scheduler.ui())
             .subscribe(::onLoginSuccess, ::onLoginError, ::onLoginComplete)

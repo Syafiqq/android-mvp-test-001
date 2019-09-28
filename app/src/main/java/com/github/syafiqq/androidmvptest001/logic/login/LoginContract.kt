@@ -17,7 +17,7 @@ interface LoginContract {
     }
 
     interface Presenter : ActivityLifecycleContract.Presenter {
-        fun doLogin(email: String? = null, password: String? = null)
+        fun doLogin(request: LoginRequest)
         fun doCancelLogin()
     }
 }

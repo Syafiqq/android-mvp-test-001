@@ -34,7 +34,7 @@ class HomeActivity : AppCompatActivity(), HomeContract.View, LifecycleOwner {
         lifecycle.addObserver(presenter.lifecycleObserver)
         super.onCreate(savedInstanceState)
 
-        this.binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         setSupportActionBar(toolbar)
 
 

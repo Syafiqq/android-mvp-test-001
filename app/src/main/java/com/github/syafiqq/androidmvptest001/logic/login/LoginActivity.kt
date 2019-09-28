@@ -6,8 +6,10 @@ import android.os.PersistableBundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import com.github.syafiqq.androidmvptest001.R
+import com.github.syafiqq.androidmvptest001.databinding.ActivityLoginBinding
 import com.github.syafiqq.androidmvptest001.logic.user.home.HomeActivity
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
+    lateinit var binding: ActivityLoginBinding
     @Inject
     lateinit var presenter: LoginContract.Presenter
     var disposable = CompositeDisposable()
@@ -33,7 +36,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
         lifecycle.addObserver(presenter.lifecycleObserver)
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.request = LoginRequest()
 
         val s: Observer<View> = PublishSubject.create<View>().apply {
             throttleFirst(350, TimeUnit.MILLISECONDS)
@@ -103,6 +107,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
     override fun onResume() {
         Timber.d("onResume")
         super.onResume()
+
+        binding.request?.run {
+            email = "mail1@mail.com"
+            password = "pass1"
+        }
     }
 
     override fun onRestart() {
@@ -193,6 +202,6 @@ class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
     }
 
     private fun onLogin(view: View) {
-        presenter.doLogin(email.editText?.text.toString(), password.editText?.text.toString())
+        presenter.doLogin(binding.request!!)
     }
 }
