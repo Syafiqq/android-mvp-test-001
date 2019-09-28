@@ -1,10 +1,12 @@
 package com.github.syafiqq.androidmvptest001.logic.user.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.github.syafiqq.androidmvptest001.R
+import com.github.syafiqq.androidmvptest001.logic.user.detail.DetailActivity
 import com.github.syafiqq.androidmvptest001.model.di.component.UserComponent
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
 import io.reactivex.Observer
@@ -137,6 +139,8 @@ class HomeActivity : AppCompatActivity(), HomeContract.View {
 
     override fun gotoDetailActivity() {
         Timber.d("gotoDetailActivity")
+
+        startActivity(Intent(this, DetailActivity::class.java))
     }
 
 }

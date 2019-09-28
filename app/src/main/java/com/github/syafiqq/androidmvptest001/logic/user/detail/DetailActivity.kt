@@ -26,6 +26,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        presenter.onCreate()
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
