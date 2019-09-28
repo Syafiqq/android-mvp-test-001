@@ -1,6 +1,7 @@
 package com.github.syafiqq.androidmvptest001.logic.login
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,8 +24,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("onCreate [savedInstanceState: Bundle?]")
+
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_login)
 
         val s: Observer<View> = PublishSubject.create<View>().apply {
@@ -33,10 +37,59 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         }
 
         button.setOnClickListener(s::onNext)
+        presenter.onCreate()
     }
 
-    private fun onLogin(view: View) {
-        presenter.doLogin(email.editText?.text.toString(), password.editText?.text.toString())
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        Timber.d("onCreate")
+        super.onCreate(savedInstanceState, persistentState)
+
+        presenter.onCreateWithPersistence()
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        Timber.d("onPostCreate [savedInstanceState: Bundle?]")
+        super.onPostCreate(savedInstanceState)
+
+        presenter.onPostCreate()
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        Timber.d("onPostCreate [savedInstanceState: Bundle?, persistentState: PersistableBundle?]")
+        super.onPostCreate(savedInstanceState, persistentState)
+
+        presenter.onPostCreateWithPersistence()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Timber.d("onSaveInstanceState [outState: Bundle]")
+        super.onSaveInstanceState(outState)
+
+        presenter.onSaveInstanceState()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        Timber.d("onSaveInstanceState [outState: Bundle, outPersistentState: PersistableBundle]")
+        super.onSaveInstanceState(outState, outPersistentState)
+
+        presenter.onSaveInstanceStateWithPersistence()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        Timber.d("onRestoreInstanceState [savedInstanceState: Bundle]")
+        super.onRestoreInstanceState(savedInstanceState)
+
+        presenter.onRestoreInstanceState()
+    }
+
+    override fun onRestoreInstanceState(
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?
+    ) {
+        Timber.d("onRestoreInstanceState [savedInstanceState: Bundle?, persistentState: PersistableBundle?]")
+        super.onRestoreInstanceState(savedInstanceState, persistentState)
+
+        presenter.onRestoreInstanceStateWithPersistence()
     }
 
     override fun onStart() {
@@ -139,5 +192,9 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     private fun enableLoginButton() {
         button.isEnabled = true
+    }
+
+    private fun onLogin(view: View) {
+        presenter.doLogin(email.editText?.text.toString(), password.editText?.text.toString())
     }
 }

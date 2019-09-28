@@ -4,17 +4,48 @@ import android.annotation.SuppressLint
 import com.github.syafiqq.androidmvptest001.model.concurrent.SchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
+import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
 
 class SplashScreenPresenter @Inject constructor(
-    private val view: SplashScreenContract.View,
+    @JvmField private var view: SplashScreenContract.View?,
     private val schedulers: SchedulerProvider
 ) : SplashScreenContract.Presenter {
+    private var disposable = CompositeDisposable()
+
     override fun onCreate() {
         Timber.d("onCreate")
 
         dispatchUi()
+    }
+
+    override fun onCreateWithPersistence() {
+        Timber.d("onCreateWithPersistence")
+    }
+
+    override fun onPostCreate() {
+        Timber.d("onPostCreate")
+    }
+
+    override fun onPostCreateWithPersistence() {
+        Timber.d("onPostCreateWithPersistence")
+    }
+
+    override fun onSaveInstanceState() {
+        Timber.d("onSaveInstanceState")
+    }
+
+    override fun onSaveInstanceStateWithPersistence() {
+        Timber.d("onSaveInstanceStateWithPersistence")
+    }
+
+    override fun onRestoreInstanceState() {
+        Timber.d("onRestoreInstanceState")
+    }
+
+    override fun onRestoreInstanceStateWithPersistence() {
+        Timber.d("onRestoreInstanceStateWithPersistence")
     }
 
     override fun onStart() {
@@ -39,6 +70,9 @@ class SplashScreenPresenter @Inject constructor(
 
     override fun onDestroy() {
         Timber.d("onDestroy")
+
+        disposable.dispose()
+        view = null
     }
 
     private fun dummyWaiting(): ObservableSource<Int> {
@@ -52,6 +86,6 @@ class SplashScreenPresenter @Inject constructor(
         Observable.defer(::dummyWaiting)
             .subscribeOn(schedulers.single())
             .observeOn(schedulers.ui())
-            .subscribe { view.gotoLoginActivity() }
+            .subscribe { view?.gotoLoginActivity() }
     }
 }

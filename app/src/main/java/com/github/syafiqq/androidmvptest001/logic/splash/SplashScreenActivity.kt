@@ -3,6 +3,7 @@ package com.github.syafiqq.androidmvptest001.logic.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.github.syafiqq.androidmvptest001.R
@@ -39,7 +40,7 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
     private val mHideRunnable = Runnable(::hide)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.d("onCreate [saveInstanceState]")
+        Timber.d("onCreate [savedInstanceState: Bundle?]")
 
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -50,14 +51,60 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
         presenter.onCreate()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        Timber.d("onCreate")
+        super.onCreate(savedInstanceState, persistentState)
+
+        presenter.onCreateWithPersistence()
+    }
+
     override fun onPostCreate(savedInstanceState: Bundle?) {
-        Timber.d("onPostCreate [saveInstanceState]")
+        Timber.d("onPostCreate [savedInstanceState: Bundle?]")
         super.onPostCreate(savedInstanceState)
 
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100)
+        presenter.onPostCreate()
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        Timber.d("onPostCreate [savedInstanceState: Bundle?, persistentState: PersistableBundle?]")
+        super.onPostCreate(savedInstanceState, persistentState)
+
+        presenter.onPostCreateWithPersistence()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Timber.d("onSaveInstanceState [outState: Bundle]")
+        super.onSaveInstanceState(outState)
+
+        presenter.onSaveInstanceState()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        Timber.d("onSaveInstanceState [outState: Bundle, outPersistentState: PersistableBundle]")
+        super.onSaveInstanceState(outState, outPersistentState)
+
+        presenter.onSaveInstanceStateWithPersistence()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        Timber.d("onRestoreInstanceState [savedInstanceState: Bundle]")
+        super.onRestoreInstanceState(savedInstanceState)
+
+        presenter.onRestoreInstanceState()
+    }
+
+    override fun onRestoreInstanceState(
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?
+    ) {
+        Timber.d("onRestoreInstanceState [savedInstanceState: Bundle?, persistentState: PersistableBundle?]")
+        super.onRestoreInstanceState(savedInstanceState, persistentState)
+
+        presenter.onRestoreInstanceStateWithPersistence()
     }
 
     override fun onStart() {
@@ -111,7 +158,7 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
     }
 
     private fun hide() {
-        Timber.d("hide []")
+        Timber.d("hide")
         // Hide UI first
         supportActionBar?.hide()
         mVisible = false
@@ -125,7 +172,7 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
      * previously scheduled calls.
      */
     private fun delayedHide(delayMillis: Int) {
-        Timber.d("delayedHide [delayMillis:$delayMillis]")
+        Timber.d("delayedHide [delayMillis: Int]")
 
         mHideHandler.removeCallbacks(mHideRunnable)
         mHideHandler.postDelayed(mHideRunnable, delayMillis.toLong())
