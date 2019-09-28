@@ -19,4 +19,6 @@ import javax.inject.Singleton
 interface AppComponent : AndroidInjector<App> {
     @Component.Factory
     interface Factory : AndroidInjector.Factory<App>
+
+    fun buildUserComponent(): UserComponent.Factory
 }

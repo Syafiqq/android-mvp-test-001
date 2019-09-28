@@ -4,6 +4,7 @@ import android.util.Log
 import com.github.syafiqq.androidmvptest001.BuildConfig
 import com.github.syafiqq.androidmvptest001.model.di.component.AppComponent
 import com.github.syafiqq.androidmvptest001.model.di.component.DaggerAppComponent
+import com.github.syafiqq.androidmvptest001.model.di.component.UserComponent
 import com.github.syafiqq.ext.dagger.android.DaggerApplication
 import dagger.android.AndroidInjector
 import timber.log.Timber
@@ -13,7 +14,15 @@ class App : DaggerApplication() {
         cls: Class<*>?,
         holders: MutableMap<Class<*>, Any>?
     ): AndroidInjector<*> {
-        return DaggerAppComponent.factory().create(this)
+        return when (cls) {
+            UserComponent::class.java -> {
+                val appComponent = holders?.get(AppComponent::class.java) as AppComponent
+                appComponent.buildUserComponent().create(this)
+            }
+            else -> {
+                DaggerAppComponent.factory().create(this)
+            }
+        }
     }
 
     override fun rootComponent(): Class<*> = AppComponent::class.java
