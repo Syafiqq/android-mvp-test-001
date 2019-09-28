@@ -91,20 +91,21 @@ class LoginPresenter @Inject constructor(
 
     override fun doLogin(request: LoginRequest) {
         view?.onLoginClick()
+        view?.onResetValidation()
 
         if (TextUtils.isEmpty(request.email)) {
             view?.onInvalidEmail("Email cannot be empty")
             return
         }
         if (TextUtils.isEmpty(request.password)) {
-            view?.onInvalidEmail("Email cannot be empty")
+            view?.onInvalidPassword("Password cannot be empty")
             return
         }
 
         val loginApi = api.login(request.email, request.password)
             .subscribeOn(scheduler.single())
             .observeOn(scheduler.ui())
-            .subscribe(::onLoginSuccess, ::onLoginError, ::onLoginComplete)
+            .subscribe(::onLoginSuccess, ::onLoginError)
 
         loginApi.addTo(disposable)
     }
@@ -113,17 +114,13 @@ class LoginPresenter @Inject constructor(
         Timber.d("onLoginSuccess [UserEntity]")
         session.setSession(user)
         view?.onSuccessLogin(user)
+        view?.onCompleteLogin()
         view?.gotoHomeActivity()
     }
 
     private fun onLoginError(e: Throwable) {
         Timber.d("onLoginError [Throwable]")
         view?.onErrorLogin(e)
-    }
-
-    private fun onLoginComplete() {
-        Timber.d("onLoginComplete [Throwable]")
-
         view?.onCompleteLogin()
     }
 

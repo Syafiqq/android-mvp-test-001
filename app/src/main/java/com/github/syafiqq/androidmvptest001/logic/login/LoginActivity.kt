@@ -204,4 +204,9 @@ class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
     private fun onLogin(view: View) {
         presenter.doLogin(binding.request!!)
     }
+
+    override fun onResetValidation() {
+        email.error = null
+        password.error = null
+    }
 }

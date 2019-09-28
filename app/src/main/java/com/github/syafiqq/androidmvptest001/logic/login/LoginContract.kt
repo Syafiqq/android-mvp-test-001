@@ -6,6 +6,7 @@ import com.github.syafiqq.androidmvptest001.model.mvp.contract.ActivityLifecycle
 interface LoginContract {
     interface View : ActivityLifecycleContract.View {
         fun onLoginClick()
+        fun onResetValidation()
         fun onInvalidEmail(cause: String)
         fun onInvalidPassword(cause: String)
         fun onSuccessLogin(user: UserEntity)
