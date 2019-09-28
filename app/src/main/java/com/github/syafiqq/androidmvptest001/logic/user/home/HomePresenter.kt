@@ -3,12 +3,14 @@ package com.github.syafiqq.androidmvptest001.logic.user.home
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import timber.log.Timber
 import javax.inject.Inject
 
 class HomePresenter @Inject constructor(
-    @JvmField private var view: HomeContract.View?
-) : HomeContract.Presenter , LifecycleObserver {
+    @JvmField private var view: HomeContract.View?,
+    override val user: UserEntity
+) : HomeContract.Presenter, LifecycleObserver {
     override val lifecycleObserver: LifecycleObserver = this
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)

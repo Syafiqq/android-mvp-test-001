@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import com.github.syafiqq.androidmvptest001.R
+import com.github.syafiqq.androidmvptest001.databinding.ActivityHomeBinding
 import com.github.syafiqq.androidmvptest001.logic.user.detail.DetailActivity
 import com.github.syafiqq.androidmvptest001.model.di.component.UserComponent
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), HomeContract.View, LifecycleOwner {
+    lateinit var binding: ActivityHomeBinding
     @Inject
     lateinit var presenter: HomeContract.Presenter
     private var disposable = CompositeDisposable()
@@ -31,7 +34,7 @@ class HomeActivity : AppCompatActivity(), HomeContract.View, LifecycleOwner {
         lifecycle.addObserver(presenter.lifecycleObserver)
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_home)
+        this.binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         setSupportActionBar(toolbar)
 
 
@@ -103,6 +106,8 @@ class HomeActivity : AppCompatActivity(), HomeContract.View, LifecycleOwner {
     override fun onResume() {
         Timber.d("onResume")
         super.onResume()
+
+        binding.presenter = presenter
     }
 
     override fun onRestart() {
