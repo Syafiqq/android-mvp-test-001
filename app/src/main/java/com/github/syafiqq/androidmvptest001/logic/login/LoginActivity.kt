@@ -1,11 +1,13 @@
 package com.github.syafiqq.androidmvptest001.logic.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.syafiqq.androidmvptest001.R
+import com.github.syafiqq.androidmvptest001.logic.home.HomeActivity
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
 import io.reactivex.Observer
@@ -188,6 +190,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     override fun gotoHomeActivity() {
         Timber.d("gotoHomeActivity")
+
+        startActivity(Intent(this, HomeActivity::class.java)).also {
+            finish()
+        }
     }
 
     private fun enableLoginButton() {
