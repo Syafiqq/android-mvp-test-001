@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import com.github.syafiqq.androidmvptest001.R
 import com.github.syafiqq.androidmvptest001.logic.login.LoginActivity
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
@@ -17,7 +18,7 @@ import javax.inject.Inject
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
+class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View, LifecycleOwner {
     @Inject
     lateinit var presenter: SplashScreenContract.Presenter
 
@@ -43,12 +44,12 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
         Timber.d("onCreate [savedInstanceState: Bundle?]")
 
         AndroidInjection.inject(this)
+        lifecycle.addObserver(presenter.lifecycleObserver)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_splash_screen)
 
         mVisible = true
-        presenter.onCreate()
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
@@ -110,15 +111,11 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
     override fun onStart() {
         Timber.d("onStart")
         super.onStart()
-
-        presenter.onStart()
     }
 
     override fun onResume() {
         Timber.d("onResume")
         super.onResume()
-
-        presenter.onResume()
     }
 
     override fun onRestart() {
@@ -130,21 +127,18 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
 
     override fun onPause() {
         Timber.d("onPause")
-        super.onPause()
 
-        presenter.onPause()
+        super.onPause()
     }
 
     override fun onStop() {
         Timber.d("onStop")
-        presenter.onStop()
 
         super.onStop()
     }
 
     override fun onDestroy() {
         Timber.d("onDestroy")
-        presenter.onDestroy()
 
         super.onDestroy()
     }

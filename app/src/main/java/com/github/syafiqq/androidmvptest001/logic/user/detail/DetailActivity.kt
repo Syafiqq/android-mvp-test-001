@@ -3,6 +3,7 @@ package com.github.syafiqq.androidmvptest001.logic.user.detail
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import com.github.syafiqq.androidmvptest001.R
 import com.github.syafiqq.androidmvptest001.model.di.component.UserComponent
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class DetailActivity : AppCompatActivity(), DetailContract.View {
+class DetailActivity : AppCompatActivity(), DetailContract.View, LifecycleOwner {
     @Inject
     lateinit var presenter: DetailContract.Presenter
     private var disposable = CompositeDisposable()
@@ -21,12 +22,12 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         Timber.d("onCreate [savedInstanceState: Bundle?]")
 
         AndroidInjection.inject(this, UserComponent::class.java)
+        lifecycle.addObserver(presenter.lifecycleObserver)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        presenter.onCreate()
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
@@ -84,15 +85,11 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     override fun onStart() {
         Timber.d("onStart")
         super.onStart()
-
-        presenter.onStart()
     }
 
     override fun onResume() {
         Timber.d("onResume")
         super.onResume()
-
-        presenter.onResume()
     }
 
     override fun onRestart() {
@@ -105,20 +102,15 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     override fun onPause() {
         Timber.d("onPause")
         super.onPause()
-
-        presenter.onPause()
     }
 
     override fun onStop() {
         Timber.d("onStop")
-        presenter.onStop()
-
         super.onStop()
     }
 
     override fun onDestroy() {
         Timber.d("onDestroy")
-        presenter.onDestroy()
         disposable.dispose()
 
         super.onDestroy()

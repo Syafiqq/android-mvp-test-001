@@ -1,6 +1,9 @@
 package com.github.syafiqq.androidmvptest001.logic.login
 
 import android.text.TextUtils
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.github.syafiqq.androidmvptest001.model.concurrent.SchedulerProvider
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import com.github.syafiqq.androidmvptest001.model.service.api.identity.IdentityServer
@@ -16,9 +19,12 @@ class LoginPresenter @Inject constructor(
     private val api: IdentityServer,
     private val session: UserManager,
     private val scheduler: SchedulerProvider
-) : LoginContract.Presenter {
+) : LoginContract.Presenter, LifecycleObserver {
+    override val lifecycleObserver: LifecycleObserver = this
+
     private var disposable = CompositeDisposable()
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     override fun onCreate() {
         Timber.d("onCreate")
     }
@@ -51,10 +57,12 @@ class LoginPresenter @Inject constructor(
         Timber.d("onRestoreInstanceStateWithPersistence")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     override fun onStart() {
         Timber.d("onStart")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun onResume() {
         Timber.d("onResume")
     }
@@ -63,14 +71,17 @@ class LoginPresenter @Inject constructor(
         Timber.d("onRestart")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     override fun onPause() {
         Timber.d("onPause")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     override fun onStop() {
         Timber.d("onStop")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun onDestroy() {
         Timber.d("onDestroy")
 

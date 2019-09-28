@@ -1,6 +1,9 @@
 package com.github.syafiqq.androidmvptest001.logic.splash
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.github.syafiqq.androidmvptest001.model.concurrent.SchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -11,9 +14,11 @@ import javax.inject.Inject
 class SplashScreenPresenter @Inject constructor(
     @JvmField private var view: SplashScreenContract.View?,
     private val schedulers: SchedulerProvider
-) : SplashScreenContract.Presenter {
+) : SplashScreenContract.Presenter, LifecycleObserver {
+    override val lifecycleObserver: LifecycleObserver = this
     private var disposable = CompositeDisposable()
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     override fun onCreate() {
         Timber.d("onCreate")
 
@@ -48,10 +53,12 @@ class SplashScreenPresenter @Inject constructor(
         Timber.d("onRestoreInstanceStateWithPersistence")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     override fun onStart() {
         Timber.d("onStart")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun onResume() {
         Timber.d("onResume")
     }
@@ -60,14 +67,17 @@ class SplashScreenPresenter @Inject constructor(
         Timber.d("onRestart")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     override fun onPause() {
         Timber.d("onPause")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     override fun onStop() {
         Timber.d("onStop")
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun onDestroy() {
         Timber.d("onDestroy")
 
