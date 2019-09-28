@@ -1,7 +1,7 @@
 package com.github.syafiqq.androidmvptest001.model.di.module
 
-import com.github.syafiqq.androidmvptest001.logic.home.HomeActivity
-import com.github.syafiqq.androidmvptest001.logic.home.HomeModule
+import com.github.syafiqq.androidmvptest001.logic.user.home.HomeActivity
+import com.github.syafiqq.androidmvptest001.logic.user.home.HomeModule
 import com.github.syafiqq.androidmvptest001.model.di.scope.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

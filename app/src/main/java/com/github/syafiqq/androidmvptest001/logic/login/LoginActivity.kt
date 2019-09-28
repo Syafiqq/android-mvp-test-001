@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.syafiqq.androidmvptest001.R
-import com.github.syafiqq.androidmvptest001.logic.home.HomeActivity
+import com.github.syafiqq.androidmvptest001.logic.user.home.HomeActivity
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
 import io.reactivex.Observer

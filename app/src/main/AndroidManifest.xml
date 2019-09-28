@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".logic.home.HomeActivity"
+            android:name="com.github.syafiqq.androidmvptest001.logic.user.home.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".logic.login.LoginActivity" />

@@ -1,4 +1,4 @@
-package com.github.syafiqq.androidmvptest001.logic.home
+package com.github.syafiqq.androidmvptest001.logic.user.home
 
 import dagger.Binds
 import dagger.Module
