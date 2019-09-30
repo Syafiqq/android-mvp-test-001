@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.github.syafiqq.androidmvptest001.model.concurrent.SchedulerProvider
+import com.github.syafiqq.androidmvptest001.model.dump.ClockLiveData
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import com.github.syafiqq.androidmvptest001.model.service.api.identity.IdentityServer
 import com.github.syafiqq.androidmvptest001.model.service.identity.UserManager
@@ -18,7 +19,8 @@ class LoginPresenter @Inject constructor(
     @JvmField private var view: LoginContract.View?,
     private val api: IdentityServer,
     private val session: UserManager,
-    private val scheduler: SchedulerProvider
+    private val scheduler: SchedulerProvider,
+    override val clock: ClockLiveData
 ) : LoginContract.Presenter, LifecycleObserver {
     override val lifecycleObserver: LifecycleObserver = this
 
