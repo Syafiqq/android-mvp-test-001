@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.github.syafiqq.androidmvptest001.model.concurrent.SchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -39,14 +40,16 @@ class ClockLiveDataImpl @Inject constructor(schedulers: SchedulerProvider) : Clo
     }
 
     override fun start() {
+        Timber.d("start")
+
         reset()
         obs.subscribe(::tick).let(disposable::add)
     }
 
     private fun tick(interval: Long) {
-        val hundred = _hundreds.value ?: -100 + 100
-        val second = _seconds.value ?: -1 + if (hundred == 1000) 1 else 0
-        val minute = _minutes.value ?: -1 + if (second == 60) 1 else 0
+        val hundred = (_hundreds.value ?: -100) + 100
+        val second = (_seconds.value ?: -1) + if (hundred == 1000) 1 else 0
+        val minute = (_minutes.value ?: -1) + if (second == 60) 1 else 0
 
         _hundreds.postValue(if (hundred == 1000) 0 else hundred)
         _seconds.postValue(if (second == 60) 0 else second)
@@ -54,11 +57,14 @@ class ClockLiveDataImpl @Inject constructor(schedulers: SchedulerProvider) : Clo
     }
 
     override fun finish() {
+        Timber.d("finish")
+
         disposable.dispose()
     }
 
     @Synchronized
     override fun reset() {
+        Timber.d("reset")
         synchronized(lock) {
             _hundreds.postValue(0)
             _seconds.postValue(0)
