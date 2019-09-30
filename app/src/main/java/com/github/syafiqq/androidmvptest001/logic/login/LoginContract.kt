@@ -1,5 +1,6 @@
 package com.github.syafiqq.androidmvptest001.logic.login
 
+import com.github.syafiqq.androidmvptest001.model.dump.ClockLiveData
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import com.github.syafiqq.androidmvptest001.model.mvp.contract.ActivityLifecycleContract
 
@@ -18,6 +19,7 @@ interface LoginContract {
     }
 
     interface Presenter : ActivityLifecycleContract.Presenter {
+        val clock: ClockLiveData
         fun doLogin(request: LoginRequest)
         fun doCancelLogin()
     }
