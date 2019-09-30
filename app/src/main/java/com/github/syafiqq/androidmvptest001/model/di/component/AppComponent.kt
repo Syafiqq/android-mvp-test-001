@@ -2,6 +2,7 @@ package com.github.syafiqq.androidmvptest001.model.di.component
 
 import com.github.syafiqq.androidmvptest001.controller.App
 import com.github.syafiqq.androidmvptest001.model.di.module.AppActivityMapperModule
+import com.github.syafiqq.androidmvptest001.model.di.module.AppLiveDataModule
 import com.github.syafiqq.androidmvptest001.model.di.module.AppModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -13,7 +14,8 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         AppModule::class,
-        AppActivityMapperModule::class
+        AppActivityMapperModule::class,
+        AppLiveDataModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
