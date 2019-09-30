@@ -13,7 +13,6 @@ import com.github.syafiqq.androidmvptest001.databinding.ActivityLoginBinding
 import com.github.syafiqq.androidmvptest001.logic.user.home.HomeActivity
 import com.github.syafiqq.androidmvptest001.model.entity.UserEntity
 import com.github.syafiqq.ext.dagger.android.AndroidInjection
-import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
@@ -36,13 +35,28 @@ class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
         lifecycle.addObserver(presenter.lifecycleObserver)
         super.onCreate(savedInstanceState)
 
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
         binding.request = LoginRequest()
 
-        val s: Observer<View> = PublishSubject.create<View>().apply {
+        val s: io.reactivex.Observer<View> = PublishSubject.create<View>().apply {
             throttleFirst(350, TimeUnit.MILLISECONDS)
             subscribe(::onLogin)?.addTo(disposable)
         }
+
+        presenter.clock.hundreds.observe(this, androidx.lifecycle.Observer {
+            setClock(presenter.clock.minutes.value ?: 0, presenter.clock.seconds.value ?: 0, it)
+        })
+
+        presenter.clock.seconds.observe(this, androidx.lifecycle.Observer {
+            setClock(presenter.clock.minutes.value ?: 0, it, presenter.clock.hundreds.value ?: 0)
+        })
+
+        presenter.clock.minutes.observe(this, androidx.lifecycle.Observer {
+            setClock(it, presenter.clock.seconds.value ?: 0, presenter.clock.hundreds.value ?: 0)
+        })
+        presenter.clock.start()
 
         button.setOnClickListener(s::onNext)
     }
@@ -195,6 +209,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
         startActivity(Intent(this, HomeActivity::class.java)).also {
             finish()
         }
+    }
+
+    private fun setClock(minute: Int, second: Int, hundred: Int) {
+        binding.clock = "$minute:$second:$hundred"
     }
 
     private fun enableLoginButton() {
