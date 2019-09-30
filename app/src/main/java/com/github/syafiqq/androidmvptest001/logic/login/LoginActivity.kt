@@ -212,7 +212,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View, LifecycleOwner {
     }
 
     private fun setClock(minute: Int, second: Int, hundred: Int) {
-        binding.clock = String.format("%03d:%03d:%03d", minute, second, hundred)
+        binding.clock = String.format("%02d:%02d:%03d", minute, second, hundred)
     }
 
     private fun enableLoginButton() {
