@@ -48,9 +48,9 @@ class ClockLiveDataImpl @Inject constructor(schedulers: SchedulerProvider) : Clo
         val second = _seconds.value ?: -1 + if (hundred == 1000) 1 else 0
         val minute = _minutes.value ?: -1 + if (second == 60) 1 else 0
 
-        _hundreds.value = if (hundred == 1000) 0 else hundred
-        _seconds.value = if (second == 60) 0 else second
-        _minutes.value = minute
+        _hundreds.postValue(if (hundred == 1000) 0 else hundred)
+        _seconds.postValue(if (second == 60) 0 else second)
+        _minutes.postValue(minute)
     }
 
     override fun finish() {
@@ -60,9 +60,9 @@ class ClockLiveDataImpl @Inject constructor(schedulers: SchedulerProvider) : Clo
     @Synchronized
     override fun reset() {
         synchronized(lock) {
-            _hundreds.value = 0
-            _seconds.value = 0
-            _minutes.value = 0
+            _hundreds.postValue(0)
+            _seconds.postValue(0)
+            _minutes.postValue(0)
         }
     }
 }
