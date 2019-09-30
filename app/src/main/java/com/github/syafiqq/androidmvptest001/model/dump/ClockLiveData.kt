@@ -22,7 +22,7 @@ interface ClockLiveData {
 class ClockLiveDataImpl @Inject constructor(schedulers: SchedulerProvider) : ClockLiveData {
     private val lock = Any()
     private var obs: Observable<Long> =
-        Observable.interval(10, TimeUnit.MILLISECONDS, schedulers.single())
+        Observable.interval(100, TimeUnit.MILLISECONDS, schedulers.single())
 
     private val disposable = CompositeDisposable()
 
